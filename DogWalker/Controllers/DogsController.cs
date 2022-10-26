@@ -6,45 +6,43 @@ using System.Collections.Generic;
 
 namespace DogWalker.Controllers
 {
-    public class WalkersController : Controller
+    public class DogsController : Controller
     {
 
-        private readonly IWalkerRepository _walkerRepo;
+        private readonly IDogRepository _dogRepo;
 
-        // ASP.NET will give us an instance of our Walker Repository. This is called "Dependency Injection"
-        public WalkersController(IWalkerRepository walkerRepository)
+        // ASP.NET will give us an instance of our Dog Repository. This is called "Dependency Injection"
+        public DogsController(IDogRepository dogRepository)
         {
-            _walkerRepo = walkerRepository;
+            _dogRepo = dogRepository;
         }
-        // GET: WalkersController
-
+        // GET: DogsController
         public ActionResult Index()
         {
-            List<Walker> walkers = _walkerRepo.GetAllWalkers();
-
-            return View(walkers);
+            List<Dog> dogs = _dogRepo.GetAllDogs();
+            return View(dogs);
         }
 
-        // GET: WalkersController/Details/5
+        // GET: DogsController/Details/5
         public ActionResult Details(int id)
         {
-            Walker walker = _walkerRepo.GetWalkerById(id);
+            Dog dog = _dogRepo.GetDogById(id);
 
-            if (walker == null)
+            if (dog == null)
             {
                 return NotFound();
             }
 
-            return View(walker);
+            return View(dog);
         }
 
-        // GET: WalkersController/Create
+        // GET: DogsController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: WalkersController/Create
+        // POST: DogsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -59,13 +57,13 @@ namespace DogWalker.Controllers
             }
         }
 
-        // GET: WalkersController/Edit/5
+        // GET: DogsController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: WalkersController/Edit/5
+        // POST: DogsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -80,13 +78,13 @@ namespace DogWalker.Controllers
             }
         }
 
-        // GET: WalkersController/Delete/5
+        // GET: DogsController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: WalkersController/Delete/5
+        // POST: DogsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
