@@ -80,10 +80,12 @@ namespace DogWalker.Controllers
         // POST: OwnersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Owner owner)
         {
             try
             {
+
+                _ownerRepo.AddOwner(owner);
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -112,6 +114,7 @@ namespace DogWalker.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, Owner owner)
         {
+            owner.Id = id;
             try
             {
                 _ownerRepo.UpdateOwner(owner);
