@@ -1,10 +1,14 @@
 ﻿using DogWalker.Models;
 using DogWalker.Models.ViewModels;
 using DogWalker.Repositories;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace DogWalker.Controllers
 {
@@ -148,5 +152,41 @@ namespace DogWalker.Controllers
                 return View(owner);
             }
         }
+
+        //GET: Login
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+
+        //POST: Login
+        [HttpPost]
+        public async Task<ActionResult> Login(LoginViewModel viewModel)
+        {
+            Owner owner = _ownerRepo.GetOwnerByEmail(viewModel.Email);
+
+            if (owner == null)
+            {
+                return Unauthorized();
+            }
+
+            var claims = new List<Claim>
+    {
+        new Claim(ClaimTypes.NameIdentifier, owner.Id.ToString()),
+        new Claim(ClaimTypes.Email, owner.Email),
+        new Claim(ClaimTypes.Role, "DogOwner"),
+    };
+
+            var claimsIdentity = new ClaimsIdentity(
+                claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity));
+
+            return RedirectToAction("Index", "Dogs");
+        }
+
     }
 }

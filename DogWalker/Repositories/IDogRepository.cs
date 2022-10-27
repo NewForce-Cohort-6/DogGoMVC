@@ -10,5 +10,6 @@ namespace DogWalker.Repositories
         Dog GetDogById(int id);
 
         List<Dog> GetDogsByOwnerId(int ownerId);
+        void AddDog(Dog dog);
     }
 }
