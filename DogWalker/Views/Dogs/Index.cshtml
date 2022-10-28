@@ -1,4 +1,4 @@
-﻿@model IEnumerable<DogWalker.Models.Walker>
+﻿@model IEnumerable<DogWalker.Models.Dog>
 
 @{
     ViewData["Title"] = "Index";
@@ -19,10 +19,16 @@
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NeighborhoodId)
+                @Html.DisplayNameFor(model => model.Breed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.ImageUrl)
+            </th>
+            <th>
+                Owner
             </th>
             <th></th>
         </tr>
@@ -37,15 +43,21 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.NeighborhoodId)
+                @Html.DisplayFor(modelItem => item.Breed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ImageUrl)
-            </td>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Owner.Name)
+                </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.Id  }) |
-                @Html.ActionLink("Details", "Details", new {  id=item.Id  }) |
-                @Html.ActionLink("Delete", "Delete", new {  id=item.Id  })
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new {  id=item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
 }
